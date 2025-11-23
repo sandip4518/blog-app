@@ -1,41 +1,65 @@
-
-<section class="posts">
-  <div class="search-container">
-    <h2>My Posts</h2>
-    <form action="/my-posts" method="GET" class="search-form">
-      <input type="text" name="q" class="search-input" placeholder="Search posts..." value="<%= typeof searchQuery !== 'undefined' ? searchQuery : '' %>">
-      <button type="submit" class="btn primary">Search</button>
+<section class="posts-section animate-fade-in">
+  <div class="search-container" style="margin-bottom: 40px; background: var(--bg-surface-glass); padding: 24px; border-radius: var(--radius-md); border: 1px solid var(--border); backdrop-filter: blur(12px);">
+    <div style="flex: 1;">
+      <h2 style="margin: 0 0 8px 0; font-size: 2rem;">My Posts</h2>
+      <p style="margin: 0; color: var(--text-muted);">Manage and organize your published content.</p>
+    </div>
+    <form action="/my-posts" method="GET" class="search-form" style="min-width: 300px;">
+      <div style="position: relative; flex: 1;">
+        <input type="text" name="q" class="search-input" placeholder="Search posts..." value="<%= typeof searchQuery !== 'undefined' ? searchQuery : '' %>" style="padding-right: 40px;">
+        <span style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); opacity: 0.5;">🔍</span>
+      </div>
+      <button type="submit" class="btn btn-primary">Search</button>
       <% if (typeof searchQuery !== 'undefined' && searchQuery) { %>
-        <a href="/my-posts" class="btn">Clear</a>
+        <a href="/my-posts" class="btn btn-secondary">Clear</a>
       <% } %>
     </form>
   </div>
+
   <% if (posts.length === 0) { %>
-    <div class="card" style="text-align: center; padding: 60px 20px;">
-      <div style="font-size: 4rem; margin-bottom: 16px; opacity: 0.5;">📝</div>
-      <h3 style="margin-bottom: 12px;">No posts yet</h3>
-      <p style="color: var(--text-muted); margin-bottom: 24px;">Start creating your first blog post!</p>
-      <a href="/posts/new" class="btn primary">Create Your First Post</a>
+    <div class="glass-panel" style="text-align: center; padding: 80px 20px; border-radius: var(--radius-lg);">
+      <div style="font-size: 4rem; margin-bottom: 24px; opacity: 0.5; animation: float 3s ease-in-out infinite;">📝</div>
+      <h3 style="margin-bottom: 16px; font-size: 1.75rem;">No posts found</h3>
+      <p style="color: var(--text-muted); margin-bottom: 32px; max-width: 400px; margin-left: auto; margin-right: auto;">
+        <%= searchQuery ? `No posts matching "${searchQuery}"` : "You haven't published any posts yet. Start your writing journey today!" %>
+      </p>
+      <a href="/posts/new" class="btn btn-primary" style="padding: 12px 32px;">Create Your First Post</a>
     </div>
   <% } %>
-  <div class="grid">
-    <% posts.forEach(p => { %>
-      <article class="card">
-        <h3><a href="/posts/<%= p.id %>"><%= p.title %></a></h3>
-        <p class="muted" style="margin-top: -8px; margin-bottom: 16px; font-size: 0.9em;"><%= new Date(p.createdAt).toLocaleString() %></p>
+
+  <div class="grid-posts">
+    <% posts.forEach((p, index) => { %>
+      <article class="card animate-fade-in" style="--delay: <%= index * 0.1 %>s; animation-delay: var(--delay);">
         <% if (p.previewImage) { %>
-          <div class="card-image">
-            <img src="<%= p.previewImage %>" alt="Post preview" loading="lazy">
+          <div class="card-image-container">
+            <img src="<%= p.previewImage %>" alt="Post preview" loading="lazy" />
+          </div>
+        <% } else { %>
+          <div class="card-image-container" style="background: linear-gradient(135deg, var(--bg-surface) 0%, var(--bg-surface-highlight) 100%); display: flex; align-items: center; justify-content: center;">
+            <span style="font-size: 3rem; opacity: 0.2;">📄</span>
           </div>
         <% } %>
-
-        <p class="excerpt"><%= stripHtml(p.content || '').slice(0, 160) %><%= (p.content || '').length > 160 ? '…' : '' %></p>
-        <div class="actions">
-          <a class="btn" href="/posts/<%= p.id %>">View</a>
-          <a class="btn" href="/posts/<%= p.id %>/edit">Edit</a>
-          <form action="/posts/<%= p.id %>?_method=DELETE" method="POST">
-            <button class="btn danger" type="submit">Delete</button>
-          </form>
+        
+        <div class="card-content">
+          <div class="card-meta">
+            <span>📅 <%= new Date(p.createdAt).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' }) %></span>
+          </div>
+          
+          <h3 class="card-title">
+            <a href="/posts/<%= p.id %>" style="color: var(--text-main); text-decoration: none; transition: color 0.2s;"><%= p.title %></a>
+          </h3>
+          
+          <p class="card-excerpt"><%= stripHtml(p.content || '').slice(0, 140) %><%= (p.content || '').length > 140 ? '…' : '' %></p>
+          
+          <div class="card-actions">
+            <a class="btn btn-secondary" href="/posts/<%= p.id %>" style="font-size: 0.85rem; padding: 8px 16px;">Read More</a>
+            <div style="display: flex; gap: 8px;">
+              <a class="btn btn-secondary" href="/posts/<%= p.id %>/edit" style="padding: 8px;">✏️</a>
+              <form action="/posts/<%= p.id %>?_method=DELETE" method="POST" style="margin: 0;">
+                <button class="btn btn-danger" type="submit" style="padding: 8px;" onclick="return confirm('Are you sure you want to delete this post?')">🗑️</button>
+              </form>
+            </div>
+          </div>
         </div>
       </article>
     <% }) %>

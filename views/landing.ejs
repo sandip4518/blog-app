@@ -1,50 +1,52 @@
-<div class="hero-section" style="text-align: center; padding: 80px 20px; max-width: 900px; margin: 0 auto;">
-  <h1 style="font-size: 4rem; margin-bottom: 24px; background: var(--primary-gradient); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; line-height: 1.1;">
-    Welcome to My Blog
+<div class="hero-section" style="text-align: center; padding: 120px 20px 80px; max-width: 900px; margin: 0 auto; position: relative;">
+  <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 600px; height: 600px; background: radial-gradient(circle, rgba(59, 130, 246, 0.15) 0%, transparent 70%); filter: blur(60px); z-index: -1;"></div>
+  
+  <h1 class="animate-fade-in" style="font-size: 4.5rem; margin-bottom: 24px; line-height: 1.1; letter-spacing: -0.03em;">
+    Share Your Story <br>
+    <span style="background: var(--gradient-primary); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">With The World</span>
   </h1>
-  <p style="font-size: 1.5rem; color: var(--text-muted); margin-bottom: 48px; line-height: 1.6;">
-    Create, manage, and share your thoughts with the world. A modern blogging platform built for writers.
+  
+  <p class="animate-fade-in delay-1" style="font-size: 1.25rem; color: var(--text-muted); margin-bottom: 48px; line-height: 1.6; max-width: 600px; margin-left: auto; margin-right: auto;">
+    A premium space for your thoughts. Create, manage, and share your ideas with a modern, distraction-free writing experience.
   </p>
   
-  <% if (locals.user) { %>
-    <div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;">
-      <a href="/my-posts" class="btn primary" style="padding: 16px 32px; font-size: 1.1rem;">
-        View My Posts
+  <div class="animate-fade-in delay-2" style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;">
+    <% if (locals.user) { %>
+      <a href="/my-posts" class="btn btn-primary" style="padding: 14px 32px; font-size: 1.1rem;">
+        Go to Dashboard
       </a>
-      <a href="/posts/new" class="btn" style="padding: 16px 32px; font-size: 1.1rem;">
-        Create New Post
+      <a href="/posts/new" class="btn btn-secondary" style="padding: 14px 32px; font-size: 1.1rem;">
+        Start Writing
       </a>
-    </div>
-  <% } else { %>
-    <div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;">
-      <a href="/register" class="btn primary" style="padding: 16px 32px; font-size: 1.1rem;">
-        Get Started
+    <% } else { %>
+      <a href="/register" class="btn btn-primary" style="padding: 14px 32px; font-size: 1.1rem;">
+        Start Your Journey
       </a>
-      <a href="/login" class="btn" style="padding: 16px 32px; font-size: 1.1rem;">
-        Login
+      <a href="/login" class="btn btn-secondary" style="padding: 14px 32px; font-size: 1.1rem;">
+        Sign In
       </a>
-    </div>
-  <% } %>
+    <% } %>
+  </div>
 </div>
 
-<div class="features-section" style="margin-top: 80px;">
-  <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 32px;">
-    <div class="card" style="text-align: center; padding: 40px;">
-      <div style="font-size: 3rem; margin-bottom: 16px;">✍️</div>
-      <h3 style="margin-bottom: 12px;">Rich Text Editor</h3>
-      <p style="color: var(--text-muted);">Create beautiful posts with our powerful rich text editor featuring images, formatting, and more.</p>
+<div class="features-section animate-fade-in delay-3" style="margin-top: 60px; margin-bottom: 80px;">
+  <div class="grid-posts" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 32px;">
+    <div class="glass-panel" style="text-align: center; padding: 40px; border-radius: var(--radius-lg); transition: transform 0.3s ease;">
+      <div style="font-size: 3.5rem; margin-bottom: 24px; background: var(--bg-surface-highlight); width: 80px; height: 80px; line-height: 80px; border-radius: 50%; margin-left: auto; margin-right: auto;">✍️</div>
+      <h3 style="margin-bottom: 16px; font-size: 1.5rem;">Rich Text Editor</h3>
+      <p style="color: var(--text-muted); font-size: 1rem;">Express yourself fully with our powerful editor. Format text, add images, and structure your content exactly how you want.</p>
     </div>
     
-    <div class="card" style="text-align: center; padding: 40px;">
-      <div style="font-size: 3rem; margin-bottom: 16px;">🔒</div>
-      <h3 style="margin-bottom: 12px;">Secure & Private</h3>
-      <p style="color: var(--text-muted);">Your posts are private to you. Only you can view, edit, and manage your content.</p>
+    <div class="glass-panel" style="text-align: center; padding: 40px; border-radius: var(--radius-lg); transition: transform 0.3s ease;">
+      <div style="font-size: 3.5rem; margin-bottom: 24px; background: var(--bg-surface-highlight); width: 80px; height: 80px; line-height: 80px; border-radius: 50%; margin-left: auto; margin-right: auto;">🔒</div>
+      <h3 style="margin-bottom: 16px; font-size: 1.5rem;">Secure & Private</h3>
+      <p style="color: var(--text-muted); font-size: 1rem;">Your personal space is sacred. Advanced security ensures your content and data remain strictly yours.</p>
     </div>
     
-    <div class="card" style="text-align: center; padding: 40px;">
-      <div style="font-size: 3rem; margin-bottom: 16px;">🔍</div>
-      <h3 style="margin-bottom: 12px;">Search & Filter</h3>
-      <p style="color: var(--text-muted);">Easily find your posts with powerful search and filtering capabilities.</p>
+    <div class="glass-panel" style="text-align: center; padding: 40px; border-radius: var(--radius-lg); transition: transform 0.3s ease;">
+      <div style="font-size: 3.5rem; margin-bottom: 24px; background: var(--bg-surface-highlight); width: 80px; height: 80px; line-height: 80px; border-radius: 50%; margin-left: auto; margin-right: auto;">⚡</div>
+      <h3 style="margin-bottom: 16px; font-size: 1.5rem;">Blazing Fast</h3>
+      <p style="color: var(--text-muted); font-size: 1rem;">Built for performance. Experience instant page loads and smooth transitions as you navigate your stories.</p>
     </div>
   </div>
 </div>

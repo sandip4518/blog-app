@@ -1,16 +1,24 @@
-<section>
-  <h1>Edit post</h1>
-  <form action="/posts/<%= post.id %>?_method=PUT" method="POST" class="card">
-    <label for="title">Title</label>
-    <input id="title" name="title" type="text" value="<%= post.title %>" />
+<section class="edit-section animate-fade-in" style="max-width: 800px; margin: 0 auto;">
+  <div style="margin-bottom: 32px; text-align: center;">
+    <h1 style="font-size: 3rem; margin-bottom: 8px;">Edit Post</h1>
+    <p style="color: var(--text-muted);">Refine your content.</p>
+  </div>
 
-    <label for="content">Content</label>
-    <input type="hidden" name="content" id="content" value="<%= post.content %>">
-    <div id="editor-container"></div>
+  <form action="/posts/<%= post.id %>?_method=PUT" method="POST" class="glass-panel" style="padding: 40px; border-radius: var(--radius-lg);">
+    <div class="form-group">
+      <label for="title" style="font-size: 1.1rem; margin-bottom: 12px;">Post Title</label>
+      <input id="title" name="title" type="text" value="<%= post.title %>" style="font-size: 1.2rem; padding: 16px;" />
+    </div>
 
-    <div class="actions">
-      <a class="btn" href="/posts/<%= post.id %>">Cancel</a>
-      <button type="submit" class="btn primary">Save</button>
+    <div class="form-group">
+      <label for="content" style="font-size: 1.1rem; margin-bottom: 12px;">Content</label>
+      <input type="hidden" name="content" id="content" value="<%= post.content %>">
+      <div id="editor-container" style="min-height: 400px; background: rgba(15, 23, 42, 0.4); border-radius: var(--radius-md); border: 1px solid var(--border);"></div>
+    </div>
+
+    <div class="actions" style="margin-top: 32px; display: flex; justify-content: flex-end; gap: 16px; align-items: center;">
+      <a href="/posts/<%= post.id %>" class="btn btn-secondary">Cancel</a>
+      <button type="submit" class="btn btn-primary" style="padding: 12px 32px; font-size: 1.1rem;">Save Changes</button>
     </div>
   </form>
 </section>
