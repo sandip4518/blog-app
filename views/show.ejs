@@ -1,0 +1,16 @@
+<article class="post-full">
+  <header>
+    <h1><%= post.title %></h1>
+    <p class="muted"><%= new Date(post.createdAt).toLocaleString() %></p>
+  </header>
+  <div class="content">
+    <%- sanitizeHtml(post.content) %>
+  </div>
+  <div class="actions">
+    <a class="btn" href="/">Back</a>
+    <a class="btn" href="/posts/<%= post.id %>/edit">Edit</a>
+    <form action="/posts/<%= post.id %>?_method=DELETE" method="POST">
+      <button class="btn danger" type="submit">Delete</button>
+    </form>
+  </div>
+</article>

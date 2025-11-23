@@ -1,0 +1,18 @@
+<section>
+  <h1>Edit post</h1>
+  <form action="/posts/<%= post.id %>?_method=PUT" method="POST" class="card">
+    <label for="title">Title</label>
+    <input id="title" name="title" type="text" value="<%= post.title %>" />
+
+    <label for="content">Content</label>
+    <input type="hidden" name="content" id="content" value="<%= post.content %>">
+    <div id="editor-container"></div>
+
+    <div class="actions">
+      <a class="btn" href="/posts/<%= post.id %>">Cancel</a>
+      <button type="submit" class="btn primary">Save</button>
+    </div>
+  </form>
+</section>
+
+

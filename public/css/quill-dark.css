@@ -1,0 +1,36 @@
+/* Quill Dark Mode Overrides */
+.ql-toolbar.ql-snow {
+  border-color: rgba(255, 255, 255, 0.1) !important;
+  background: #1f2942;
+  border-radius: 12px 12px 0 0;
+}
+
+.ql-container.ql-snow {
+  border-color: rgba(255, 255, 255, 0.1) !important;
+  background: #0f1424;
+  border-radius: 0 0 12px 12px;
+  color: var(--text);
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+}
+
+.ql-stroke {
+  stroke: #c9d7e3 !important;
+}
+
+.ql-fill {
+  fill: #c9d7e3 !important;
+}
+
+.ql-picker {
+  color: #c9d7e3 !important;
+}
+
+.ql-picker-options {
+  background-color: #1f2942 !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+.ql-editor {
+  min-height: 200px;
+}

@@ -1,0 +1,41 @@
+
+
+<section class="posts">
+  <div class="search-container">
+    <h2>Your posts</h2>
+    <form action="/" method="GET" class="search-form">
+      <input type="text" name="q" class="search-input" placeholder="Search posts..." value="<%= typeof searchQuery !== 'undefined' ? searchQuery : '' %>">
+      <button type="submit" class="btn primary">Search</button>
+      <% if (typeof searchQuery !== 'undefined' && searchQuery) { %>
+        <a href="/" class="btn">Clear</a>
+      <% } %>
+    </form>
+  </div>
+  <% if (posts.length === 0) { %>
+    <p>No posts yet. Create your first post above.</p>
+  <% } %>
+  <div class="grid">
+    <% posts.forEach(p => { %>
+      <article class="card">
+        <h3><a href="/posts/<%= p.id %>"><%= p.title %></a></h3>
+        <p class="muted" style="margin-top: -8px; margin-bottom: 16px; font-size: 0.9em;"><%= new Date(p.createdAt).toLocaleString() %></p>
+        <% if (p.previewImage) { %>
+          <div class="card-image">
+            <img src="<%= p.previewImage %>" alt="Post preview" loading="lazy">
+          </div>
+        <% } %>
+
+        <p class="excerpt"><%= stripHtml(p.content || '').slice(0, 160) %><%= (p.content || '').length > 160 ? '…' : '' %></p>
+        <div class="actions">
+          <a class="btn" href="/posts/<%= p.id %>">View</a>
+          <a class="btn" href="/posts/<%= p.id %>/edit">Edit</a>
+          <form action="/posts/<%= p.id %>?_method=DELETE" method="POST">
+            <button class="btn danger" type="submit">Delete</button>
+          </form>
+        </div>
+      </article>
+    <% }) %>
+  </div>
+</section>
+
+

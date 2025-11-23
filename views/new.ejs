@@ -1,0 +1,16 @@
+<section class="create">
+  <h1>Create a new post</h1>
+  <form action="/posts" method="POST" class="card">
+    <label for="title">Title</label>
+    <input id="title" name="title" type="text" placeholder="Post title" />
+
+    <label for="content">Content</label>
+    <input type="hidden" name="content" id="content">
+    <div id="editor-container"></div>
+
+    <div class="actions" style="margin-top: 20px;">
+      <button type="submit" class="btn primary">Publish</button>
+      <a href="/" class="btn">Cancel</a>
+    </div>
+  </form>
+</section>

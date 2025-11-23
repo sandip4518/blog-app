@@ -1,0 +1,32 @@
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment
+.env
+
+# Local SQLite DB
+blog.db
+*.sqlite
+*.sqlite3
+
+# Logs
+*.log
+logs/
+debug.log
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Test / coverage
+coverage/
+.nyc_output/
+
+# Misc
+package-lock.json
+.env.local
