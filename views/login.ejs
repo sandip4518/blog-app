@@ -1,0 +1,30 @@
+<div class="container" style="max-width: 400px;">
+  <div class="card">
+    <h1 style="font-size: 2rem; text-align: center; margin-bottom: 24px;">Login</h1>
+    
+    <% if (locals.error) { %>
+      <div style="background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 8px; padding: 12px; margin-bottom: 16px; color: #fca5a5; text-align: center;">
+        <%= error %>
+      </div>
+    <% } %>
+    
+    <form action="/login" method="POST">
+      <div style="margin-bottom: 16px;">
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" required autofocus>
+      </div>
+      
+      <div style="margin-bottom: 24px;">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" required 
+               style="width: 100%; padding: 12px 16px; background: rgba(15, 23, 42, 0.6); border: 1px solid var(--border); border-radius: 12px; color: var(--text-main); font-family: inherit; font-size: 16px; transition: all 0.2s ease;">
+      </div>
+      
+      <button type="submit" class="btn primary" style="width: 100%;">Login</button>
+    </form>
+    
+    <p style="text-align: center; margin-top: 16px;">
+      Don't have an account? <a href="/register" style="color: var(--primary);">Register</a>
+    </p>
+  </div>
+</div>

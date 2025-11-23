@@ -1,0 +1,50 @@
+<div class="hero-section" style="text-align: center; padding: 80px 20px; max-width: 900px; margin: 0 auto;">
+  <h1 style="font-size: 4rem; margin-bottom: 24px; background: var(--primary-gradient); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; line-height: 1.1;">
+    Welcome to My Blog
+  </h1>
+  <p style="font-size: 1.5rem; color: var(--text-muted); margin-bottom: 48px; line-height: 1.6;">
+    Create, manage, and share your thoughts with the world. A modern blogging platform built for writers.
+  </p>
+  
+  <% if (locals.user) { %>
+    <div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;">
+      <a href="/my-posts" class="btn primary" style="padding: 16px 32px; font-size: 1.1rem;">
+        View My Posts
+      </a>
+      <a href="/posts/new" class="btn" style="padding: 16px 32px; font-size: 1.1rem;">
+        Create New Post
+      </a>
+    </div>
+  <% } else { %>
+    <div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;">
+      <a href="/register" class="btn primary" style="padding: 16px 32px; font-size: 1.1rem;">
+        Get Started
+      </a>
+      <a href="/login" class="btn" style="padding: 16px 32px; font-size: 1.1rem;">
+        Login
+      </a>
+    </div>
+  <% } %>
+</div>
+
+<div class="features-section" style="margin-top: 80px;">
+  <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 32px;">
+    <div class="card" style="text-align: center; padding: 40px;">
+      <div style="font-size: 3rem; margin-bottom: 16px;">✍️</div>
+      <h3 style="margin-bottom: 12px;">Rich Text Editor</h3>
+      <p style="color: var(--text-muted);">Create beautiful posts with our powerful rich text editor featuring images, formatting, and more.</p>
+    </div>
+    
+    <div class="card" style="text-align: center; padding: 40px;">
+      <div style="font-size: 3rem; margin-bottom: 16px;">🔒</div>
+      <h3 style="margin-bottom: 12px;">Secure & Private</h3>
+      <p style="color: var(--text-muted);">Your posts are private to you. Only you can view, edit, and manage your content.</p>
+    </div>
+    
+    <div class="card" style="text-align: center; padding: 40px;">
+      <div style="font-size: 3rem; margin-bottom: 16px;">🔍</div>
+      <h3 style="margin-bottom: 12px;">Search & Filter</h3>
+      <p style="color: var(--text-muted);">Easily find your posts with powerful search and filtering capabilities.</p>
+    </div>
+  </div>
+</div>
