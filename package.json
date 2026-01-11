@@ -19,7 +19,7 @@
     "express-ejs-layouts": "^2.5.1",
     "express-session": "^1.18.2",
     "isomorphic-dompurify": "^2.33.0",
-    "jsdom": "^27.2.0",
+    "jsdom": "^22.1.0",
     "marked": "^17.0.1",
     "method-override": "^3.0.0",
     "mongoose": "^9.1.2",
