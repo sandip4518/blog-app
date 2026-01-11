@@ -20,7 +20,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Connect to Database
-connectDB();
+await connectDB();
 
 // Middleware
 app.set("view engine", "ejs");
