@@ -30,3 +30,5 @@ coverage/
 # Misc
 package-lock.json
 .env.local
+.vercel
+
