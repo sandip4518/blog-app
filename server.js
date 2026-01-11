@@ -1,8 +1,16 @@
+require("dotenv").config();
+const connectDB = require("./database");
+
+connectDB();
+
+
 const path = require('path');
 const express = require('express');
 const methodOverride = require('method-override');
 const expressLayouts = require('express-ejs-layouts');
-const db = require('./database');
+const User = require("./models/User");
+const Post = require("./models/Post");
+
 const createDomPurify = require('isomorphic-dompurify');
 const { JSDOM } = require('jsdom');
 const bcrypt = require('bcryptjs');
@@ -37,33 +45,42 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-passport.use(new LocalStrategy((username, password, done) => {
+
+passport.use(new LocalStrategy(async (username, password, done) => {
   try {
-    const user = db.prepare('SELECT * FROM users WHERE username = ?').get(username);
+    const user = await User.findOne({ username });
+
     if (!user) {
       return done(null, false, { message: 'Incorrect username.' });
     }
+
     if (!bcrypt.compareSync(password, user.password)) {
       return done(null, false, { message: 'Incorrect password.' });
     }
+
     return done(null, user);
   } catch (err) {
     return done(err);
   }
 }));
 
+
+
+
 passport.serializeUser((user, done) => {
-  done(null, user.id);
+  done(null, user._id);
 });
 
-passport.deserializeUser((id, done) => {
+passport.deserializeUser(async (id, done) => {
   try {
-    const user = db.prepare('SELECT * FROM users WHERE id = ?').get(id);
+    const user = await User.findById(id);
     done(null, user);
   } catch (err) {
     done(err);
   }
 });
+
+
 
 // Middleware to pass user to views
 app.use((req, res, next) => {
@@ -128,7 +145,7 @@ app.get('/register', (req, res) => {
   res.render('register', { title: 'Register', error: null });
 });
 
-app.post('/register', (req, res) => {
+app.post('/register',  async (req, res) => {
   const { username, password } = req.body;
   
   // Validation
@@ -155,12 +172,15 @@ app.post('/register', (req, res) => {
   
   try {
     const hashedPassword = bcrypt.hashSync(password, 10);
-    const stmt = db.prepare('INSERT INTO users (username, password) VALUES (?, ?)');
-    stmt.run(username.trim(), hashedPassword);
+    await User.create({
+      username: username.trim(),
+      password: hashedPassword
+    });
+    
     res.redirect('/login');
   } catch (err) {
     console.error(err);
-    if (err.code === 'SQLITE_CONSTRAINT_UNIQUE') {
+    if (err.code === 11000) { // Duplicate key error
       return res.render('register', { 
         title: 'Register', 
         error: 'Username already exists. Please choose a different username.' 
@@ -185,25 +205,34 @@ app.get('/', (req, res) => {
 });
 
 // My Posts - list user's posts
-app.get('/my-posts', isAuthenticated, (req, res) => {
+app.get('/my-posts', isAuthenticated, async (req, res) => {
   const searchQuery = req.query.q || '';
-  let posts;
-  
+  let query = { userId: req.user._id };
+
   if (searchQuery) {
-    const term = `%${searchQuery}%`;
-    posts = db.prepare('SELECT * FROM posts WHERE userId = ? AND (title LIKE ? OR content LIKE ?) ORDER BY createdAt DESC').all(req.user.id, term, term);
-  } else {
-    posts = db.prepare('SELECT * FROM posts WHERE userId = ? ORDER BY createdAt DESC').all(req.user.id);
+    query.$or = [
+      { title: new RegExp(searchQuery, 'i') },
+      { content: new RegExp(searchQuery, 'i') }
+    ];
   }
-  
-  // Add preview image to posts
-  posts = posts.map(p => ({
+
+  const posts = await Post.find(query)
+    .sort({ createdAt: -1 })
+    .lean();
+
+  const finalPosts = posts.map(p => ({
     ...p,
+    id: p._id.toString(),
     previewImage: extractFirstImage(p.content)
   }));
-  
-  res.render('my-posts', { posts, title: 'My Posts', searchQuery });
+
+  res.render('my-posts', {
+    posts: finalPosts,
+    title: 'My Posts',
+    searchQuery
+  });
 });
+
 
 // New post form
 app.get('/posts/new', isAuthenticated, (req, res) => {
@@ -211,7 +240,7 @@ app.get('/posts/new', isAuthenticated, (req, res) => {
 });
 
 // Create post
-app.post('/posts', isAuthenticated, (req, res) => {
+app.post('/posts', isAuthenticated, async(req, res) => {
   const { title = '', content = '' } = req.body;
   const trimmedTitle = title.trim();
   const trimmedContent = content.trim();
@@ -220,48 +249,68 @@ app.post('/posts', isAuthenticated, (req, res) => {
     return res.redirect('/my-posts');
   }
 
-  const stmt = db.prepare('INSERT INTO posts (title, content, createdAt, userId) VALUES (?, ?, ?, ?)');
-  stmt.run(trimmedTitle || 'Untitled', trimmedContent, new Date().toISOString(), req.user.id);
+  await Post.create({
+    title: trimmedTitle || 'Untitled',
+    content: trimmedContent,
+    userId: req.user._id
+  });
   
   res.redirect('/my-posts');
 });
 
 // Show single post
-app.get('/posts/:id', isAuthenticated, (req, res) => {
-  const id = Number(req.params.id);
-  const post = db.prepare('SELECT * FROM posts WHERE id = ? AND userId = ?').get(id, req.user.id);
+app.get('/posts/:id', isAuthenticated, async (req, res) => {
+  
+  const post = await Post.findOne({
+    _id: req.params.id,
+    userId: req.user._id
+  });
+  
   
   if (!post) return res.status(404).render('404', { title: 'Not Found' });
   res.render('show', { post, title: post.title });
 });
 
 // Edit form
-app.get('/posts/:id/edit', isAuthenticated, (req, res) => {
-  const id = Number(req.params.id);
-  const post = db.prepare('SELECT * FROM posts WHERE id = ? AND userId = ?').get(id, req.user.id);
+app.get('/posts/:id/edit', isAuthenticated, async (req, res) => {
+  
+  const post = await Post.findOne({
+    _id: req.params.id,
+    userId: req.user._id
+  });
+  
   
   if (!post) return res.status(404).render('404', { title: 'Not Found' });
   res.render('edit', { post, title: `Edit: ${post.title}` });
 });
 
 // Update post
-app.put('/posts/:id', isAuthenticated, (req, res) => {
-  const id = Number(req.params.id);
+app.put('/posts/:id', isAuthenticated, async (req, res) => {
   const { title = '', content = '' } = req.body;
-  
-  const stmt = db.prepare('UPDATE posts SET title = ?, content = ? WHERE id = ? AND userId = ?');
-  const result = stmt.run(title.trim() || 'Untitled', content.trim(), id, req.user.id);
-  
-  if (result.changes === 0) return res.status(404).render('404');
-  
-  res.redirect(`/posts/${id}`);
+
+  const result = await Post.findOneAndUpdate(
+    { _id: req.params.id, userId: req.user._id },
+    { title: title.trim() || 'Untitled', content: content.trim() },
+    { new: true }
+  );
+
+  if (!result) {
+    return res.status(404).render('404');
+  }
+
+  res.redirect(`/posts/${req.params.id}`);
 });
 
+
 // Delete post
-app.delete('/posts/:id', isAuthenticated, (req, res) => {
-  const id = Number(req.params.id);
-  db.prepare('DELETE FROM posts WHERE id = ? AND userId = ?').run(id, req.user.id);
+app.delete('/posts/:id', isAuthenticated, async (req, res) => {
+
+  await Post.findOneAndDelete({
+    _id: req.params.id,
+    userId: req.user._id
+  });
   res.redirect('/my-posts');
+  
 });
 
 // 404 fallback
@@ -269,6 +318,10 @@ app.use((req, res) => {
   res.status(404).render('404', { title: 'Not Found' });
 });
 
-app.listen(PORT, () => {
-  console.log(`Blog app listening on http://localhost:${PORT}`);
-});
+if (require.main === module) {
+  app.listen(PORT, () => {
+    console.log(`Blog app listening on http://localhost:${PORT}`);
+  });
+}
+
+module.exports = app;

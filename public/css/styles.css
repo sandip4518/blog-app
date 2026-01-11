@@ -224,6 +224,25 @@ a:hover { color: var(--accent); }
   align-items: center;
 }
 
+/* Post Content Styling */
+.content img {
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--radius-md);
+  margin: 24px 0;
+  box-shadow: var(--shadow-lg);
+  display: block;
+}
+
+.content h1, .content h2, .content h3 {
+  margin-top: 1.5em;
+}
+
+.content iframe {
+  max-width: 100%;
+  border-radius: var(--radius-md);
+}
+
 /* Buttons */
 .btn {
   display: inline-flex;
@@ -356,5 +375,13 @@ textarea:focus {
   .grid-posts { grid-template-columns: 1fr; }
   .container { padding: 0 20px; }
   .site-header .container { flex-direction: column; gap: 16px; }
+}
+
+/* Editor Specifics */
+.ql-editor img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 10px 0;
 }
 
