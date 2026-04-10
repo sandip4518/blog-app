@@ -1,52 +1,109 @@
-<div class="hero-section" style="text-align: center; padding: 120px 20px 80px; max-width: 900px; margin: 0 auto; position: relative;">
-  <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 600px; height: 600px; background: radial-gradient(circle, rgba(59, 130, 246, 0.15) 0%, transparent 70%); filter: blur(60px); z-index: -1;"></div>
+<!-- HERO SECTION -->
+<div class="hero-section">
+  <div class="animate-fade-in" style="margin-bottom: 20px;">
+    <span class="label-stamp" style="display: inline-flex; align-items: center; gap: 8px;">
+      <span class="led led-green"></span>
+      System Online — Ready to Write
+    </span>
+  </div>
   
-  <h1 class="animate-fade-in" style="font-size: 4.5rem; margin-bottom: 24px; line-height: 1.1; letter-spacing: -0.03em;">
-    Share Your Story <br>
-    <span style="background: var(--gradient-primary); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">With The World</span>
+  <h1 class="animate-fade-in delay-1">
+    Forge Your Story<br>
+    <span class="hero-accent">With Precision</span>
   </h1>
   
-  <p class="animate-fade-in delay-1" style="font-size: 1.25rem; color: var(--text-muted); margin-bottom: 48px; line-height: 1.6; max-width: 600px; margin-left: auto; margin-right: auto;">
-    A premium space for your thoughts. Create, manage, and share your ideas with a modern, distraction-free writing experience.
+  <p class="hero-subtitle animate-fade-in delay-2">
+    A precision-engineered space for your thoughts. Create, manage, and share your ideas with a distraction-free, mechanically-solid writing experience.
   </p>
   
-  <div class="animate-fade-in delay-2" style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;">
+  <div class="hero-cta-group animate-fade-in delay-3">
     <% if (locals.user) { %>
-      <a href="/my-posts" class="btn btn-primary" style="padding: 14px 32px; font-size: 1.1rem;">
+      <a href="/my-posts" class="btn btn-primary" style="padding: 16px 36px; font-size: 0.95rem;">
         Go to Dashboard
       </a>
-      <a href="/posts/new" class="btn btn-secondary" style="padding: 14px 32px; font-size: 1.1rem;">
+      <a href="/posts/new" class="btn btn-secondary" style="padding: 16px 36px; font-size: 0.95rem;">
         Start Writing
       </a>
     <% } else { %>
-      <a href="/register" class="btn btn-primary" style="padding: 14px 32px; font-size: 1.1rem;">
+      <a href="/register" class="btn btn-primary" style="padding: 16px 36px; font-size: 0.95rem;">
         Start Your Journey
       </a>
-      <a href="/login" class="btn btn-secondary" style="padding: 14px 32px; font-size: 1.1rem;">
+      <a href="/login" class="btn btn-secondary" style="padding: 16px 36px; font-size: 0.95rem;">
         Sign In
       </a>
     <% } %>
   </div>
+
+  <!-- Device Mockup -->
+  <div class="hero-device animate-fade-in delay-4">
+    <div class="hero-device-screen">
+      <div class="screen-content">
+        <div style="grid-column: 1 / -1; display: flex; flex-direction: column; gap: 8px; padding-top: 6px;">
+          <div style="display: flex; gap: 6px; margin-bottom: 4px;">
+            <div style="width: 8px; height: 8px; border-radius: 50%; background: #ff4757;"></div>
+            <div style="width: 8px; height: 8px; border-radius: 50%; background: #f59e0b;"></div>
+            <div style="width: 8px; height: 8px; border-radius: 50%; background: #22c55e;"></div>
+          </div>
+          <div class="screen-bar" style="width: 70%;"></div>
+          <div class="screen-bar" style="width: 100%; opacity: 0.3; animation-delay: 0.5s;"></div>
+          <div class="screen-bar" style="width: 45%; animation-delay: 1s;"></div>
+        </div>
+        <div class="screen-block" style="min-height: 60px;"></div>
+        <div class="screen-block" style="min-height: 60px;"></div>
+        <div class="screen-block" style="grid-column: 1 / -1; min-height: 40px;"></div>
+      </div>
+    </div>
+    <div class="device-led"></div>
+  </div>
 </div>
 
-<div class="features-section animate-fade-in delay-3" style="margin-top: 60px; margin-bottom: 80px;">
+<!-- FEATURES SECTION -->
+<div class="animate-fade-in delay-3" style="margin-top: 80px; margin-bottom: 80px;">
+  <div style="text-align: center; margin-bottom: 48px;">
+    <span class="label-stamp">Specifications</span>
+    <h2 style="margin-top: 12px; font-size: 2.5rem;">Built to Last</h2>
+    <p style="max-width: 500px; margin: 0 auto;">Precision-engineered features for the modern writer.</p>
+  </div>
+  
   <div class="grid-posts" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 32px;">
-    <div class="glass-panel" style="text-align: center; padding: 40px; border-radius: var(--radius-lg); transition: transform 0.3s ease;">
-      <div style="font-size: 3.5rem; margin-bottom: 24px; background: var(--bg-surface-highlight); width: 80px; height: 80px; line-height: 80px; border-radius: 50%; margin-left: auto; margin-right: auto;">✍️</div>
-      <h3 style="margin-bottom: 16px; font-size: 1.5rem;">Rich Text Editor</h3>
-      <p style="color: var(--text-muted); font-size: 1rem;">Express yourself fully with our powerful editor. Format text, add images, and structure your content exactly how you want.</p>
+    <div class="feature-card">
+      <div class="feature-icon">✍️</div>
+      <h3>Rich Text Editor</h3>
+      <p>Express yourself fully with our powerful editor. Format text, add images, and structure your content exactly how you want.</p>
     </div>
     
-    <div class="glass-panel" style="text-align: center; padding: 40px; border-radius: var(--radius-lg); transition: transform 0.3s ease;">
-      <div style="font-size: 3.5rem; margin-bottom: 24px; background: var(--bg-surface-highlight); width: 80px; height: 80px; line-height: 80px; border-radius: 50%; margin-left: auto; margin-right: auto;">🔒</div>
-      <h3 style="margin-bottom: 16px; font-size: 1.5rem;">Secure & Private</h3>
-      <p style="color: var(--text-muted); font-size: 1rem;">Your personal space is sacred. Advanced security ensures your content and data remain strictly yours.</p>
+    <div class="feature-card">
+      <div class="feature-icon">🔒</div>
+      <h3>Secure & Private</h3>
+      <p>Your personal space is fortified. Industrial-grade security ensures your content and data remain strictly yours.</p>
     </div>
     
-    <div class="glass-panel" style="text-align: center; padding: 40px; border-radius: var(--radius-lg); transition: transform 0.3s ease;">
-      <div style="font-size: 3.5rem; margin-bottom: 24px; background: var(--bg-surface-highlight); width: 80px; height: 80px; line-height: 80px; border-radius: 50%; margin-left: auto; margin-right: auto;">⚡</div>
-      <h3 style="margin-bottom: 16px; font-size: 1.5rem;">Blazing Fast</h3>
-      <p style="color: var(--text-muted); font-size: 1rem;">Built for performance. Experience instant page loads and smooth transitions as you navigate your stories.</p>
+    <div class="feature-card">
+      <div class="feature-icon">⚡</div>
+      <h3>Blazing Fast</h3>
+      <p>Built for peak performance. Experience instant page loads and smooth transitions as you navigate your stories.</p>
+    </div>
+  </div>
+</div>
+
+<!-- STATS BAR — Dark Technical Panel -->
+<div class="animate-fade-in delay-4" style="background: #2d3436; border-radius: var(--radius-xl); padding: 40px; margin-bottom: 60px; box-shadow: var(--shadow-floating);">
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 24px; text-align: center;">
+    <div>
+      <div style="font-family: var(--font-mono); font-size: 2.5rem; font-weight: 800; color: #ffffff; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));">99.9%</div>
+      <div style="font-family: var(--font-mono); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: #a8b2d1; margin-top: 4px;">Uptime</div>
+    </div>
+    <div>
+      <div style="font-family: var(--font-mono); font-size: 2.5rem; font-weight: 800; color: #ffffff; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));">&lt;50ms</div>
+      <div style="font-family: var(--font-mono); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: #a8b2d1; margin-top: 4px;">Response</div>
+    </div>
+    <div>
+      <div style="font-family: var(--font-mono); font-size: 2.5rem; font-weight: 800; color: #ffffff; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));">256-bit</div>
+      <div style="font-family: var(--font-mono); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: #a8b2d1; margin-top: 4px;">Encryption</div>
+    </div>
+    <div>
+      <div style="font-family: var(--font-mono); font-size: 2.5rem; font-weight: 800; color: var(--accent); filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));">∞</div>
+      <div style="font-family: var(--font-mono); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: #a8b2d1; margin-top: 4px;">Posts</div>
     </div>
   </div>
 </div>

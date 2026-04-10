@@ -1,24 +1,32 @@
-<section class="create-section animate-fade-in" style="max-width: 800px; margin: 0 auto;">
-  <div style="margin-bottom: 32px; text-align: center;">
-    <h1 style="font-size: 3rem; margin-bottom: 8px;">Create New Post</h1>
-    <p style="color: var(--text-muted);">Share your thoughts with the world.</p>
+<section class="animate-fade-in" style="max-width: 800px; margin: 0 auto;">
+  <div class="editor-header">
+    <span class="label-stamp" style="display: block; margin-bottom: 12px;">New Module</span>
+    <h1>Create New Post</h1>
+    <p>Share your thoughts with precision.</p>
   </div>
 
-  <form action="/posts" method="POST" class="glass-panel" style="padding: 40px; border-radius: var(--radius-lg);">
-    <div class="form-group">
-      <label for="title" style="font-size: 1.1rem; margin-bottom: 12px;">Post Title</label>
-      <input id="title" name="title" type="text" placeholder="Enter an engaging title..." style="font-size: 1.2rem; padding: 16px;" autofocus />
+  <form action="/posts" method="POST" class="editor-panel">
+    <!-- Vent slots -->
+    <div style="position: absolute; top: 18px; right: 24px; display: flex; gap: 3px;">
+      <div style="width: 2px; height: 20px; border-radius: 9999px; background: var(--muted); box-shadow: inset 1px 1px 2px rgba(0,0,0,0.1);"></div>
+      <div style="width: 2px; height: 20px; border-radius: 9999px; background: var(--muted); box-shadow: inset 1px 1px 2px rgba(0,0,0,0.1);"></div>
+      <div style="width: 2px; height: 20px; border-radius: 9999px; background: var(--muted); box-shadow: inset 1px 1px 2px rgba(0,0,0,0.1);"></div>
     </div>
 
     <div class="form-group">
-      <label for="content" style="font-size: 1.1rem; margin-bottom: 12px;">Content</label>
+      <label for="title">Post Title</label>
+      <input id="title" name="title" type="text" placeholder="Enter an engaging title..." autofocus />
+    </div>
+
+    <div class="form-group">
+      <label for="content">Content</label>
       <input type="hidden" name="content" id="content">
-      <div id="editor-container" style="min-height: 400px; background: rgba(15, 23, 42, 0.4); border-radius: var(--radius-md); border: 1px solid var(--border);"></div>
+      <div id="editor-container" class="editor-well"></div>
     </div>
 
-    <div class="actions" style="margin-top: 32px; display: flex; justify-content: flex-end; gap: 16px; align-items: center;">
+    <div class="editor-actions">
       <a href="/my-posts" class="btn btn-secondary">Cancel</a>
-      <button type="submit" class="btn btn-primary" style="padding: 12px 32px; font-size: 1.1rem;">Publish Post</button>
+      <button type="submit" class="btn btn-primary" style="padding: 14px 36px;">Publish Post</button>
     </div>
   </form>
 </section>

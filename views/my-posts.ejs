@@ -1,62 +1,72 @@
 <section class="posts-section animate-fade-in">
-  <div class="search-container" style="margin-bottom: 40px; background: var(--bg-surface-glass); padding: 24px; border-radius: var(--radius-md); border: 1px solid var(--border); backdrop-filter: blur(12px);">
+  <div class="search-container">
     <div style="flex: 1;">
-      <h2 style="margin: 0 0 8px 0; font-size: 2rem;">My Posts</h2>
-      <p style="margin: 0; color: var(--text-muted);">Manage and organize your published content.</p>
+      <span class="label-stamp" style="display: block; margin-bottom: 6px;">Control Panel</span>
+      <h2 style="margin: 0 0 6px 0; font-size: 2rem;">My Posts</h2>
+      <p style="margin: 0; color: var(--text-muted); font-size: 0.92rem;">Manage and organize your published modules.</p>
     </div>
-    <form action="/my-posts" method="GET" class="search-form" style="min-width: 300px;">
+    <form action="/my-posts" method="GET" class="search-form">
       <div style="position: relative; flex: 1;">
-        <input type="text" name="q" class="search-input" placeholder="Search posts..." value="<%= typeof searchQuery !== 'undefined' ? searchQuery : '' %>" style="padding-right: 40px;">
-        <span style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); opacity: 0.5;">🔍</span>
+        <input type="text" name="q" class="search-input" placeholder="Search posts..." value="<%= typeof searchQuery !== 'undefined' ? searchQuery : '' %>" style="padding-right: 44px;">
+        <span style="position: absolute; right: 16px; top: 50%; transform: translateY(-50%); opacity: 0.4; font-size: 1.1rem;">🔍</span>
       </div>
-      <button type="submit" class="btn btn-primary">Search</button>
+      <button type="submit" class="btn btn-primary" style="min-height: 56px;">Search</button>
       <% if (typeof searchQuery !== 'undefined' && searchQuery) { %>
-        <a href="/my-posts" class="btn btn-secondary">Clear</a>
+        <a href="/my-posts" class="btn btn-secondary" style="min-height: 56px;">Clear</a>
       <% } %>
     </form>
   </div>
 
   <% if (posts.length === 0) { %>
-    <div class="glass-panel" style="text-align: center; padding: 80px 20px; border-radius: var(--radius-lg);">
-      <div style="font-size: 4rem; margin-bottom: 24px; opacity: 0.5; animation: float 3s ease-in-out infinite;">📝</div>
-      <h3 style="margin-bottom: 16px; font-size: 1.75rem;">No posts found</h3>
-      <p style="color: var(--text-muted); margin-bottom: 32px; max-width: 400px; margin-left: auto; margin-right: auto;">
-        <%= searchQuery ? `No posts matching "${searchQuery}"` : "You haven't published any posts yet. Start your writing journey today!" %>
+    <div class="empty-state">
+      <div class="empty-state-icon">📝</div>
+      <h3>No posts found</h3>
+      <p>
+        <%= searchQuery ? `No modules matching "${searchQuery}"` : "You haven't published any posts yet. Start forging today!" %>
       </p>
-      <a href="/posts/new" class="btn btn-primary" style="padding: 12px 32px;">Create Your First Post</a>
+      <a href="/posts/new" class="btn btn-primary" style="padding: 14px 36px;">Create Your First Post</a>
     </div>
   <% } %>
 
   <div class="grid-posts">
     <% posts.forEach((p, index) => { %>
-      <article class="card animate-fade-in" style="--delay: <%= index * 0.1 %>s; animation-delay: var(--delay);">
+      <article class="card animate-fade-in" style="--delay: <%= index * 0.08 %>s; animation-delay: var(--delay);">
+        <!-- Vent slots -->
+        <div class="card-vents">
+          <div class="card-vent"></div>
+          <div class="card-vent"></div>
+          <div class="card-vent"></div>
+        </div>
+
         <% if (p.previewImage) { %>
           <div class="card-image-container">
             <img src="<%= p.previewImage %>" alt="Post preview" loading="lazy" />
           </div>
         <% } else { %>
-          <div class="card-image-container" style="background: linear-gradient(135deg, var(--bg-surface) 0%, var(--bg-surface-highlight) 100%); display: flex; align-items: center; justify-content: center;">
-            <span style="font-size: 3rem; opacity: 0.2;">📄</span>
+          <div class="card-image-container" style="background: var(--muted); display: flex; align-items: center; justify-content: center;">
+            <span style="font-size: 2.5rem; opacity: 0.15;">📄</span>
           </div>
         <% } %>
         
         <div class="card-content">
           <div class="card-meta">
-            <span>📅 <%= new Date(p.createdAt).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' }) %></span>
+            <span>LOG #<%= (index + 1).toString().padStart(3, '0') %></span>
+            <span>•</span>
+            <span><%= new Date(p.createdAt).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' }) %></span>
           </div>
           
           <h3 class="card-title">
-            <a href="/posts/<%= p.id %>" style="color: var(--text-main); text-decoration: none; transition: color 0.2s;"><%= p.title %></a>
+            <a href="/posts/<%= p.id %>"><%= p.title %></a>
           </h3>
           
           <p class="card-excerpt"><%= stripHtml(p.content || '').slice(0, 140) %><%= (p.content || '').length > 140 ? '…' : '' %></p>
           
           <div class="card-actions">
-            <a class="btn btn-secondary" href="/posts/<%= p.id %>" style="font-size: 0.85rem; padding: 8px 16px;">Read More</a>
+            <a class="btn btn-secondary" href="/posts/<%= p.id %>" style="font-size: 0.78rem; padding: 8px 18px; min-height: 38px;">Read More</a>
             <div style="display: flex; gap: 8px;">
-              <a class="btn btn-secondary" href="/posts/<%= p.id %>/edit" style="padding: 8px;">✏️</a>
+              <a class="btn btn-secondary" href="/posts/<%= p.id %>/edit" style="padding: 8px 12px; min-height: 38px; font-size: 0.85rem;">✏️</a>
               <form action="/posts/<%= p.id %>?_method=DELETE" method="POST" style="margin: 0;">
-                <button class="btn btn-danger" type="submit" style="padding: 8px;" onclick="return confirm('Are you sure you want to delete this post?')">🗑️</button>
+                <button class="btn btn-danger" type="submit" style="padding: 8px 12px; min-height: 38px; font-size: 0.85rem;" onclick="return confirm('Are you sure you want to delete this post?')">🗑️</button>
               </form>
             </div>
           </div>
@@ -65,4 +75,3 @@
     <% }) %>
   </div>
 </section>
-
